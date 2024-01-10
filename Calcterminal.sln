@@ -1,0 +1,148 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        double num1 = 0;
+        double num2 = 0;
+        double resultado = 0;
+
+        while (true)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Escolha a operação:");
+            Console.WriteLine("1- Adição");
+            Console.WriteLine("2- Subtração");
+            Console.WriteLine("3- Multiplicação");
+            Console.WriteLine("4- Divisão");
+            Console.WriteLine("5- Seno");
+            Console.WriteLine("6- Cosseno");
+            Console.WriteLine("7- Tangente");
+            Console.WriteLine("8- Logaritmo Natural (ln)");
+            Console.WriteLine("9- Raiz Quadrada");
+            Console.WriteLine("C- Limpar tela");
+            Console.ResetColor();
+
+            char operacao = Console.ReadKey().KeyChar;
+
+            if ((operacao < '1' || operacao > '9') && (operacao != 'C' && operacao != 'c'))
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Operação inválida");
+                Console.ResetColor();
+                continue;
+            }
+            else if (operacao == 'C' || operacao == 'c')
+            {
+                Console.Clear();
+                continue;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Digite o primeiro número:");
+            while (!double.TryParse(Console.ReadLine(), out num1))
+            {
+                Console.WriteLine("Valor inválido. Por favor, insira um valor válido.");
+            }
+
+            if (operacao >= '5' && operacao <= '9')
+            {
+                num2 = 0;
+            }
+            else
+            {
+                Console.WriteLine("Digite o segundo número:");
+                while (!double.TryParse(Console.ReadLine(), out num2))
+                {
+                    Console.WriteLine("Valor inválido. Por favor, insira um valor válido.");
+                }
+            }
+
+            switch (operacao)
+            {
+                case '1':
+                    resultado = num1 + num2;
+                    break;
+
+                case '2':
+                    resultado = num1 - num2;
+                    break;
+
+                case '3':
+                    resultado = num1 * num2;
+                    break;
+
+                case '4':
+                    if (num1 == 0 || num2 == 0)
+                        Console.WriteLine("divisão por zero");
+                    else
+                        resultado = num1 / num2;
+                    break;
+
+                case '5':
+                    resultado = Math.Sin(num1 * Math.PI / 180);
+                    break;
+
+                case '6':
+                    resultado = Math.Cos(num1 * Math.PI / 180);
+                    break;
+
+                case '7':
+                    resultado = Math.Tan(num1 * Math.PI / 180);
+                    break;
+
+                case '8':
+                    if (num1 <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("O logaritmo natural aceita apenas valores positivos!!!");
+                        Console.ResetColor();
+                        continue; 
+                    }
+                    resultado = Math.Log(num1);
+                    break;
+
+                case '9':
+                    resultado = Math.Sqrt(num1);
+                    break;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"O resultado da operação é {resultado}");
+            Console.ResetColor();
+
+        inicio:
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Deseja realizar outra operação? (S/N): ");
+            Console.ResetColor();
+
+            char resposta = Console.ReadKey().KeyChar;
+
+            if (resposta == 'N' || resposta == 'n')
+            {
+                Console.WriteLine();
+                Console.WriteLine("Encerrando o loop...");
+                Console.ReadLine();
+                break;
+            }
+            else if (resposta == 'S' || resposta == 's')
+            {
+                Console.WriteLine();
+                continue;
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Opção inválida");
+                Console.ResetColor();
+            }
+
+            Console.WriteLine();
+            goto inicio;
+        }
+    }
+}
